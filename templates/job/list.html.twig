@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if historyJobs %}
+        {% include 'job/_job_history.html.twig' with {'historyJobs': historyJobs} only %}
+    {% endif %}
+
+    {% for category in categories %}
+        <h4>
+            <a href="{{ path('category.show', {slug: category.slug}) }}">
+                {{ category.name }}
+            </a>
+        </h4>
+
+        {% include 'job/table.html.twig' with {
+            'jobs': category.activeJobs|slice(0, max_jobs_on_homepage)
+        } only %}
+    {% endfor %}
+{% endblock %}
